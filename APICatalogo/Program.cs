@@ -1,4 +1,5 @@
 using APICatalogo.Context;
+using APICatalogo.Filters;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -18,7 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
               options.UseMySql(mySqlConnection,
               ServerVersion.AutoDetect(mySqlConnection)));
 
+builder.Services.AddScoped<ApiLoggingFilter>();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
