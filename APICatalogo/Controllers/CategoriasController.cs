@@ -23,45 +23,31 @@ namespace APICatalogo.Controllers
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            try
-            {
+            
+            
                 return _context.Categorias.AsNoTracking().ToList();
-            }
-            catch (Exception) 
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um Problema ao tratar a sua solicitação.");
-            }
+            
+          
         }
 
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            try
-            {
+           
                 return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um Problema ao tratar a sua solicitação.");
-            }
+            
+           
         }
 
         [HttpGet("{id:int}", Name = "ObterCategorias")]
         public ActionResult Get(int id)
         {
-       
-            try
-            {
+            
                 var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
                 if (categoria is null)
-                { return NotFound(); }
-                return Ok(categoria);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um Problema ao tratar a sua solicitação.");
-            }
-
+                 { return NotFound(); }
+                 return Ok(categoria);
+           
 
         }
 
