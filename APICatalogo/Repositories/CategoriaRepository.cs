@@ -18,17 +18,13 @@ namespace APICatalogo.Repository
         }
         public IEnumerable<Categoria> GetCategorias()
         {
-            var categorias = _context.Categorias.ToList();
-            if (categorias is null) { throw new InvalidOperationException("Categoria é null");}
-
-            return categorias;
+            return _context.Categorias.ToList();
         }
+
 
         public Categoria GetCategorias(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
-            if (categoria is null) { throw new InvalidOperationException("Categoria é null"); }
-            return categoria;
+          return _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
         }
         public Categoria Create([FromBody]Categoria categoria)
         {
