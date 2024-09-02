@@ -16,6 +16,7 @@ namespace APICatalogo.Repository
         {
             _context = context;
         }
+
         public IEnumerable<Categoria> GetCategorias()
         {
             return _context.Categorias.ToList();
