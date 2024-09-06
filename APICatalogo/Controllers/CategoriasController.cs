@@ -13,10 +13,10 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        private readonly ICategoriaRepository _repository;
+        private readonly IRepository<Categoria> _repository;
         private readonly ILogger _logger;
 
-        public CategoriasController(ICategoriaRepository repository, ILogger<CategoriasController> logger)
+        public CategoriasController(IRepository<Categoria> repository, ILogger<CategoriasController> logger)
         {
             _logger = logger;
             _repository = repository;  
@@ -26,7 +26,7 @@ namespace APICatalogo.Controllers
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Categoria>> Get()
         { 
-           var categorias = _repository.GetCategorias();
+           var categorias = _repository.GetAll();
            return Ok(categorias);
         }
 
@@ -34,7 +34,7 @@ namespace APICatalogo.Controllers
         public ActionResult Get(int id)
         {
 
-            var categoria = _repository.GetCategorias(id);
+            var categoria = _repository.Get(c => c.CategoriaId == id);
                 if (categoria is null)
                  { return NotFound(); }
                  return Ok(categoria);
@@ -71,12 +71,12 @@ namespace APICatalogo.Controllers
         [HttpDelete ("{id}")]
         public ActionResult Delete(int id)
         {
-            var categoria = _repository.GetCategorias (id);
+            var categoria = _repository.Get (c => c.CategoriaId == id);
             if (categoria is null)
             {
                 return NotFound();
             }
-            var categoriaExcluida = _repository.Delete(id);
+            var categoriaExcluida = _repository.Delete(categoria);
             return Ok(categoriaExcluida);
 
         }
